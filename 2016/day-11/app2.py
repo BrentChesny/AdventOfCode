@@ -1,5 +1,20 @@
 from itertools import combinations
-import heapq
+
+types = ['TH', 'PL', 'ST', 'PR', 'RU', 'EL', 'DI']
+
+def hash_config(config):
+    global types
+    
+    hashcode = []
+    current_floor, floors = config
+
+    for type in types:
+        generator_floor = [i for i in range(4) if type + 'G' in floors[i]][0]
+        chip_floor = [i for i in range(4) if type + 'M' in floors[i]][0]
+
+        hashcode.append((generator_floor, chip_floor))
+
+    return (current_floor, tuple(sorted(hashcode)))
 
 def end(conf):
     floor, floor_contents = conf
@@ -28,16 +43,16 @@ config = (
 )
 
 
-queue = []
-heapq.heappush(queue, (0, config))
-visited = {config : 0}
+queue = [config]
+visited = {hash_config(config) : 0}
+
 
 while len(queue):
-    prio, conf = heapq.heappop(queue)
-    
+    conf = queue.pop(0)
+
+    print visited[hash_config(conf)]
 
     if end(conf):
-    	print visited[conf]
         break
 
     current_floor, floor_contents = conf
@@ -54,9 +69,8 @@ while len(queue):
             if valid(new_floors[current_floor]) and valid(new_floors[current_floor + direction]):
                 new_config = (current_floor + direction, tuple(new_floors))
 
-                new_steps = visited[conf] + 1
-                if not new_config in visited or new_steps < visited[new_config]:
-                    visited[new_config] = new_steps
-                    heapq.heappush(queue, (new_steps - len(new_floors[3]), new_config))
+                if not hash_config(new_config) in visited:
+                    visited[hash_config(new_config)] = visited[hash_config(conf)] + 1
+                    queue.append(new_config)
 
     
