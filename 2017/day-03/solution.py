@@ -25,6 +25,19 @@ def solve_part_one():
 
     return distance + (ring_index - 1)
 
+def solve_part_one_alternative():
+    x = y = 0
+    dx = 0
+    dy = -1
+    i = 1
+    while True:
+        if i == PUZZLE_INPUT:
+            return abs(x) + abs(y)
+        if x == y or (x < 0 and x == -y) or (x > 0 and x == 1-y):
+            dx, dy = -dy, dx
+        x, y = x+dx, y+dy
+        i += 1
+
 def solve_part_two():
     grid_size = 101
     offset = (grid_size-1)/2
@@ -49,6 +62,7 @@ def solve_part_two():
 
 def main():
     print 'Part one: ', solve_part_one()
+    print 'Part one (alternative): ', solve_part_one_alternative()
     print 'Part two: ', solve_part_two()
 
 if __name__ == '__main__':
