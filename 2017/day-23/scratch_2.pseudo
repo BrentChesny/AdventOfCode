@@ -1,0 +1,27 @@
+b = 106700
+c = 123700
+
+do:
+    f = 1
+    d = 2
+
+    do:
+        e = 2
+
+        do:
+            if d*e == b:
+                f = 0
+            e += 1
+        while e != b
+
+        d += 1
+    while d != b
+
+    if f == 0:
+        h += 1
+
+    if b == c:
+        break
+
+    b += 17
+while True
