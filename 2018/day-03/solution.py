@@ -9,14 +9,14 @@ def parse_input():
 def create_fabric():
     fabric = [[set() for _ in range(fabric_size)] for _ in range(fabric_size)];
     for id, x, y, width, height in parse_input():
-        for col in xrange(x, x + width):
-            for row in xrange(y, y + height):
+        for col in range(x, x + width):
+            for row in range(y, y + height):
                 fabric[row][col].add(id)
     return fabric
 
 def solve_part_one():
     fabric = create_fabric()
-    return sum([sum([1 for ids in row if len(ids) > 1]) for row in fabric])
+    return sum(1 for row in fabric for ids in row if len(ids) > 1)
 
 def solve_part_two():
     fabric = create_fabric()
@@ -29,8 +29,8 @@ def solve_part_two():
     return overlaps.index(False) + 1
 
 def main():
-    print 'Part one: ', solve_part_one()
-    print 'Part two: ', solve_part_two()
+    print('Part one: ', solve_part_one())
+    print('Part two: ', solve_part_two())
 
 if __name__ == '__main__':
     main()

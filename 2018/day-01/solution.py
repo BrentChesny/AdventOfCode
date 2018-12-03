@@ -16,8 +16,8 @@ def solve_part_two():
 
 
 def main():
-    print 'Part one: ', solve_part_one()
-    print 'Part two: ', solve_part_two()
+    print('Part one: ', solve_part_one())
+    print('Part two: ', solve_part_two())
 
 if __name__ == '__main__':
     main()
