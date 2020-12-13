@@ -2,8 +2,7 @@ from itertools import cycle
 
 
 def parse_input():
-    return list(map(int, '12345678910111213'))
-    return list(map(int, open('input.txt').read().strip()))
+    return list(map(int, open("input.txt").read().strip()))
 
 
 def get_pattern(i):
@@ -17,7 +16,7 @@ def execute_phase(signal):
     for i in range(len(signal)):
         pattern = cycle(get_pattern(i))
         next(pattern)
-        value = abs(sum(a*b for a, b in zip(signal, pattern))) % 10
+        value = abs(sum(a * b for a, b in zip(signal, pattern))) % 10
         result.append(value)
 
     return result
@@ -25,20 +24,28 @@ def execute_phase(signal):
 
 def solve_part_one():
     signal = parse_input()
-    for idx in range(100):
-        print(signal, idx)
+    for _ in range(100):
         signal = execute_phase(signal)
-    return ''.join(map(str, signal[:8]))
+    return "".join(map(str, signal[:8]))
 
 
 def solve_part_two():
-    pass
+    signal = parse_input() * 10000
+    offset = int("".join(map(str, signal[:7])))
+    for _ in range(100):
+        pos = len(signal) - 1
+        total = 0
+        while pos >= offset:
+            total += signal[pos]
+            signal[pos] = abs(total) % 10
+            pos -= 1
+    return "".join(map(str, signal[offset : offset + 8]))
 
 
 def main():
-    print('Part one: ', solve_part_one())
-    print('Part two: ', solve_part_two())
+    print("Part one: ", solve_part_one())
+    print("Part two: ", solve_part_two())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
